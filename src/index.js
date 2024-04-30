@@ -1,12 +1,11 @@
 import Project from './js/project';
 import Todo from './js/todo';
 
-let todos = [];
 let projects = [];
 
 function addTodo(title, description, dueDate, priority, projectName) {
     const todo = new Todo(title, description, dueDate, priority, projectName);
-    todos.push(todo);
+
     if (projects.some((p) => p.name === projectName)) {
         const existingProject = projects.find((p) => p.name === projectName);
         existingProject.todos.push(todo);
@@ -18,7 +17,27 @@ function addTodo(title, description, dueDate, priority, projectName) {
     localStorage.setItem('projects', JSON.stringify(projects));
 }
 
-function updateTodo(todoTitle, projectName) {}
+function updateTodo(title, description, dueDate, priority, projectName) {
+    const projectIndex = projects.findIndex(
+        (project) => project.name === projectName
+    );
+
+    const todoIndex = projects[projectIndex].todos.findIndex(
+        (todo) => todo.title === title
+    );
+
+    const updatedTodo = new Todo(
+        title,
+        description,
+        dueDate,
+        priority,
+        projectName
+    );
+
+    projects[projectIndex].todos[todoIndex] = updatedTodo;
+
+    localStorage.setItem('projects', JSON.stringify(projects));
+}
 
 addTodo('Test', 'This is a test todo', '04-23-1997', 'high', 'testProject');
 
@@ -32,4 +51,12 @@ addTodo(
     'testProject v4'
 );
 
-console.table(JSON.parse(localStorage.getItem('projects')));
+updateTodo(
+    'Test',
+    'This a updated test todo',
+    '05-24-2003',
+    'medium',
+    'testProject'
+);
+
+// console.table(JSON.parse(localStorage.getItem('projects')));
