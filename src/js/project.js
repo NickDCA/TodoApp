@@ -4,3 +4,7 @@ export default class Project {
         this.todos = todos ? todos : [];
     }
 }
+
+export function getProjects() {
+    return JSON.parse(localStorage.getItem('projects'));
+}

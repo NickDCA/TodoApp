@@ -1,11 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
     </head>
     <body>
-        <h1>Hello TodoApp</h1>
+        <dialog>
+            <form id="todoForm" method="dialog">
+                <label for="title">Title:</label><br />
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    required
+                /><br /><br />
+
+                <label for="description">Description:</label><br />
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    cols="50"
+                    required
+                ></textarea
+                ><br /><br />
+
+                <label for="dueDate">Due Date:</label><br />
+                <input
+                    type="date"
+                    id="dueDate"
+                    name="dueDate"
+                    required
+                /><br /><br />
+
+                <label for="priority">Priority:</label><br />
+                <select id="priority" name="priority">
+                    <option value="none" selected>None</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option></select
+                ><br /><br />
+
+                <label for="project">Project:</label><br />
+                <select id="project" name="project">
+                    <option value="default" selected>Default Project</option>
+                    <option value="project1">Project 1</option>
+                    <option value="project2">Project 2</option>
+                    <option value="new">Create New Project</option></select
+                ><br /><br />
+
+                <menu>
+                    <button id="submitTodo">Add Todo</button>
+                    <button id="cancelAddTodo">Cancel</button>
+                </menu>
+            </form>
+        </dialog>
+
+        <section class="projects__container">
+            <ul class="projects"></ul>
+        </section>
+
+        <menu>
+            <button id="addTodo">New Todo</button>
+        </menu>
     </body>
 </html>

@@ -1,13 +1,22 @@
+import { format } from 'date-fns';
+import { v4 as uuidv4 } from 'uuid';
+
 export default class Todo {
-    constructor(title, description, dueDate, priority, project) {
+    constructor(title, description, priority, project) {
+        this.id = uuidv4();
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
+        this.dueDate = format(new Date(), 'dd-MM-yyyy');
         this.priority = priority;
         this.project = project;
+        this.isCompleted = false;
     }
 
-    displayTodo() {
+    display() {
         console.table(this);
+    }
+
+    complete() {
+        this.complete = true;
     }
 }
