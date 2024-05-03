@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
+import displayAllTodos from './displayAllTodos';
 import { getProjects } from './project';
+import { createTodo } from './todoCRUD';
 
 export default function configTodoForm() {
     const formModal = document.querySelector('dialog');
@@ -8,12 +10,15 @@ export default function configTodoForm() {
         <option value="default" selected>Default</option>
     `;
     const projects = getProjects();
-    projects.forEach((p) => {
-        const option = document.createElement('option');
-        option.value = p.name;
-        option.textContent = p.name;
-        modalProjectSelect.appendChild(option);
-    });
+
+    projects !== null
+        ? projects.forEach((p) => {
+              const option = document.createElement('option');
+              option.value = p.name;
+              option.textContent = p.name;
+              modalProjectSelect.appendChild(option);
+          })
+        : '';
 
     const addTodoBtn = document.querySelector('#addTodo');
     addTodoBtn.addEventListener('click', () => formModal.showModal());
@@ -42,7 +47,10 @@ function handleSubmitInputs() {
     );
 
     const todoPriority = formData.get('priority');
+
+    // CHECK FOR EXISTING PROJECTS, IF DOESN'T EXIST, CREATE A NEW PROJECT
     const todoProject = formData.get('project');
+
     const newTodo = {
         title: todoTitle,
         description: todoDescription,
@@ -50,5 +58,7 @@ function handleSubmitInputs() {
         priority: todoPriority,
         project: todoProject,
     };
-    console.log(newTodo);
+
+    createTodo(newTodo);
+    displayAllTodos();
 }

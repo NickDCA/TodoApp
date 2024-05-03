@@ -1,5 +1,7 @@
-import Project from './project';
+import Project, { getProjects } from './project';
 import Todo from './todo';
+
+const projects = [];
 
 function createTodo(title, description, priority, projectName) {
     const todo = new Todo(title, description, priority, projectName);
@@ -38,8 +40,12 @@ function deleteTodo(id, projectName) {
     const todoIndex = projects[projectIndex].todos.findIndex(
         (todo) => todo.id === id
     );
+    console.table(projects[projectIndex].todos);
 
     projects[projectIndex].todos.splice(todoIndex, 1);
+    console.table(projects[projectIndex].todos);
 
     localStorage.setItem('projects', JSON.stringify(projects));
 }
+
+export { createTodo, deleteTodo, updateTodo };

@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Todo {
-    constructor(title, description, priority, project) {
+    constructor({ title, description, priority, project }) {
         this.id = uuidv4();
         this.title = title;
         this.description = description;
