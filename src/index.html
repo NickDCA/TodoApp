@@ -43,12 +43,14 @@
                 ><br /><br />
 
                 <label for="project">Project:</label><br />
-                <select id="project" name="project">
-                    <option value="default" selected>Default Project</option>
-                    <option value="project1">Project 1</option>
-                    <option value="project2">Project 2</option>
-                    <option value="new">Create New Project</option></select
-                ><br /><br />
+                <select id="project" name="project"></select>
+
+                <br /><br />
+                <div class="input__new-project">
+                    <label for="newProject">New project name:</label><br />
+                    <input type="text" id="newProject" name="newProject" />
+                    <br /><br />
+                </div>
 
                 <menu>
                     <button id="submitTodo">Add Todo</button>

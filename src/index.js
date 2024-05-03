@@ -1,12 +1,22 @@
+import { format } from 'date-fns';
 import displayAllTodos from './js/displayAllTodos';
-import Project from './js/project';
+import Project, { getProjects } from './js/project';
 import Todo from './js/todo';
 import { createTodo, deleteTodo, updateTodo } from './js/todoCRUD';
 import configTodoForm from './js/todoForm';
+import './styles/style.scss';
 
-const defaultProject = new Project('Default', [
-    new Todo('Default', 'Default Todo', 'low', 'Default'),
-]);
+const projects = getProjects();
+if (projects.length === 0) {
+    const defaultTodo = {
+        title: 'Default Todo',
+        description: 'This is a default example todo!',
+        dueDate: format(new Date(), 'dd-MM-yyyy'),
+        priority: 'low',
+        projectName: 'Default',
+    };
+    createTodo(defaultTodo);
+}
 
 // createTodo('Test', 'This is a test todo', 'high', 'testProject');
 

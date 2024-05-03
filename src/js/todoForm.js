@@ -5,20 +5,32 @@ import { createTodo } from './todoCRUD';
 
 export default function configTodoForm() {
     const formModal = document.querySelector('dialog');
-    const modalProjectSelect = document.querySelector('#project');
-    modalProjectSelect.innerHTML = `
-        <option value="default" selected>Default</option>
-    `;
+    const projectSelect = document.querySelector('#project');
+
     const projects = getProjects();
 
-    projects !== null
-        ? projects.forEach((p) => {
-              const option = document.createElement('option');
-              option.value = p.name;
-              option.textContent = p.name;
-              modalProjectSelect.appendChild(option);
-          })
-        : '';
+    projects.forEach((p) => {
+        const option = document.createElement('option');
+        option.value = p.name;
+        option.textContent = p.name;
+        option.addEventListener('click', () => {
+            const newProjectInput = document.querySelector(
+                '.input__new-project'
+            );
+            newProjectInput.classList.remove('input__new-project--active');
+        });
+        projectSelect.appendChild(option);
+    });
+
+    const createProjectOption = document.createElement('option');
+    createProjectOption.value = 'new';
+    createProjectOption.textContent = 'Create new project';
+    createProjectOption.addEventListener('click', () => {
+        const newProjectInput = document.querySelector('.input__new-project');
+        newProjectInput.classList.add('input__new-project--active');
+    });
+
+    projectSelect.appendChild(createProjectOption);
 
     const addTodoBtn = document.querySelector('#addTodo');
     addTodoBtn.addEventListener('click', () => formModal.showModal());
@@ -47,18 +59,20 @@ function handleSubmitInputs() {
     );
 
     const todoPriority = formData.get('priority');
-
-    // CHECK FOR EXISTING PROJECTS, IF DOESN'T EXIST, CREATE A NEW PROJECT
-    const todoProject = formData.get('project');
+    let todoProject = formData.get('project');
+    if (todoProject === 'new') {
+        todoProject = formData.get('newProject');
+    }
 
     const newTodo = {
         title: todoTitle,
         description: todoDescription,
         dueDate: todoDueDateFormatted,
         priority: todoPriority,
-        project: todoProject,
+        projectName: todoProject,
     };
 
+    console.log(newTodo);
     createTodo(newTodo);
     displayAllTodos();
 }

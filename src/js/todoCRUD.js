@@ -1,23 +1,26 @@
 import Project, { getProjects } from './project';
 import Todo from './todo';
 
-const projects = [];
-
-function createTodo(title, description, priority, projectName) {
-    const todo = new Todo(title, description, priority, projectName);
+function createTodo({ title, description, priority, dueDate, projectName }) {
+    const todo = new Todo(title, description, priority, dueDate, projectName);
+    const projects = getProjects();
 
     if (projects.some((p) => p.name === projectName)) {
         const existingProject = projects.find((p) => p.name === projectName);
         existingProject.todos.push(todo);
     } else {
+        console.log('projetos vazio ou projeto não encontrado');
+        console.log('project name: ' + projectName);
         const newProject = new Project(projectName, [todo]);
         projects.push(newProject);
     }
+    console.table(projects);
 
     localStorage.setItem('projects', JSON.stringify(projects));
 }
 
 function updateTodo(title, description, priority, projectName) {
+    const projects = getProjects();
     const projectIndex = projects.findIndex(
         (project) => project.name === projectName
     );
@@ -34,6 +37,7 @@ function updateTodo(title, description, priority, projectName) {
 }
 
 function deleteTodo(id, projectName) {
+    const projects = getProjects();
     const projectIndex = projects.findIndex(
         (project) => project.name === projectName
     );
